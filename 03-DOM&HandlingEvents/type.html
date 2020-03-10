@@ -4,7 +4,7 @@
 		<title>Typing test</title>
 		<meta charset="UTF-8">
 	</head>
-	<body>
+	<body id="mainBody">
 		<h1>How fast are your fingers?</h1>
 		<h3>You have 30 seconds. Just start typing...</h3>
 		<p>Nam strzelać nie kazano. - Wstąpiłem na działo<br>
@@ -20,10 +20,49 @@
 		Przeciw nim sterczy biała, wąska, zaostrzona,<br>
 		Jak głaz bodzący morze, reduta Ordona.</p>
 		
-		<textarea rows="15" cols="50"></textarea><br>
+		<textarea rows="15" cols="50" oninput="start()" id="userInput"></textarea><br>
 		
 		<script>
-			// a JavaScript code here ...
+			let activated = false
+			function start(){
+				if(!activated){
+					activated = true
+
+				var countDownDate = (new Date().getTime()) + (30 * 1000)
+
+
+				let interval = setInterval(function() {
+					var now = new Date().getTime();
+					var distance = countDownDate - now;
+
+					if (distance < 0) {
+						let text = document.getElementById("userInput").value
+						let words = countWords(text)
+						let chars = text.length
+
+
+						var p = document.createElement('p');
+						p.textContent = "Words: " + words + "   Chars: " + chars 
+						
+						document.getElementById('mainBody').appendChild(p);
+
+						console.log("Words " + countWords(text))
+
+						console.log(text)
+						clearInterval(interval)
+						// activated = false
+					}
+				}, 1000)
+				}
+			}
+
+			function countWords(text){
+				s = text;
+				s = s.replace(/(^\s*)|(\s*$)/gi,"");
+				s = s.replace(/[ ]{2,}/gi," ");
+				s = s.replace(/\n /,"\n");
+				return s.split(' ').length;
+			}
 			
 		</script>
 		
