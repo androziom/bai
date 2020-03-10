@@ -7,30 +7,40 @@
 </head>
 
 <body>
-    <h1>Shopping List</h1>
-    <p>
-        New item: <input type="text" name="item" id="myInput">
-        <button type="button" onclick="addItem(this)">Add</button>
-    </p>
-    <h3>List of items</h3>
-    <ol id="list">
-        <li>cooking oil</li>
-        <li>breakfast cereal</li>
-        <li>bread</li>
-    </ol>
+<h1>Shopping List</h1>
+<p>
+    New item: <input type="text" name="item" id="myInput">
+    <button type="button" onclick="addItem()">Add</button>
+</p>
+<h3>List of items</h3>
+<ol id="list">
+    <li ondblclick="remove(this)">cooking oil</li>
+    <li ondblclick="remove(this)">breakfast cereal</li>
+    <li ondblclick="remove(this)">bread</li>
+</ol>
 
-    <script>
-        function addItem(element){
-            var inputVal = document.getElementById("myInput").value;
-            
-            var entry = document.createElement('li');
-            entry.appendChild(document.createTextNode(inputVal));
-            list.appendChild(entry);
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-            document.getElementById("myInput").value = ""
-        }
+<script>
+    function addItem() {
+        var inputVal = document.getElementById("myInput").value;
 
-    </script>
+        var entry = document.createElement('li');
+        entry.appendChild(document.createTextNode(inputVal));
+        list.appendChild(entry);
+
+        entry.addEventListener('dblclick', function () {
+            remove(entry)
+        });
+
+        document.getElementById("myInput").value = ""
+    }
+
+    function remove(element) {
+        $(element).remove();
+    }
+
+</script>
 </body>
 
 </html>

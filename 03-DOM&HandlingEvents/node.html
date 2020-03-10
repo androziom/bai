@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Create DOM elements</title>
-		<meta charset="UTF-8">
-	</head>
-	<body>
-		<script>
-			// a JavaScript code here ...
-			
-		</script>
-	</body>
+<style>
+    table, td {
+        border: 1px solid black;
+    }
+</style>
+<head>
+    <title>Create DOM elements</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<table id="table">
+</table>
+<script>
+    var table = document.getElementById("table");
+    var row0 = table.insertRow(0);
+    var row1 = table.insertRow(1);
+
+    var cell1 = row0.insertCell(0);
+    var cell2 = row0.insertCell(1);
+    var cell3 = row1.insertCell(0);
+    var cell4 = row1.insertCell(1);
+
+    cell1.style.border = "1px solid black;"
+
+    cell1.textContent = "1";
+    cell2.textContent = "2"
+    cell3.textContent = "3"
+    cell4.textContent = "4"
+</script>
+</body>
 </html>
