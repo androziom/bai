@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart</title>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+</head>
+<body onload="loadDataFromJSON()">
+<div style="max-width: 1000px; max-height: 500px">
+    <canvas id="myChart" width="1000" height="500" style="height: 500px; width: 1000px"></canvas>
+</div>
+
+<script>
+    function loadDataFromJSON() {
+        readJSON("http://api.nbp.pl/api/cenyzlota/last/10?format=json", function (text) {
+            var parsedJSON = JSON.parse(text);
+            console.log(parsedJSON)
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['T-10','T-9','T-8','T-7','T-6','T-5', 'T-4', 'T-3', 'T-2', 'T-1'],
+                    datasets: [{
+                        label: 'Cena złota w PLN',
+                        data: parsedJSON.map(x => x.cena),
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    }
+                }
+            });
+        })
+    }
+
+    function readJSON(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4 && rawFile.status === 200) {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+</script>
+
+</body>
+</html>

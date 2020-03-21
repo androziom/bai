@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student</title>
+    <title>Exchange</title>
     <meta charset="UTF-8">
 </head>
-<body>
-<h1>Student</h1>
-<p>Open a console and then click the button</p>
-<input type="button" value="Display student's data" onclick="logDataFromJSON()">
-<p id="personalData">
-<p id="name"></p>
-<p id="surname"></p>
-</p>
+<body onload="loadDataFromJSON();">
+
+<p id="eur"></p>
+<p id="usd"></p>
+<p id="gbp"></p>
 
 <script>
-    function logDataFromJSON() {
-        readJSON("http://v-ie.uek.krakow.pl/~s215902/data.json", function (text) {
+    function loadDataFromJSON() {
+        readJSON("http://api.nbp.pl/api/exchangerates/tables/A?format=json", function (text) {
             var data = JSON.parse(text);
-            document.getElementById("name").textContent = data.name
-            document.getElementById("surname").textContent = data.surname
+            document.getElementById("eur").textContent = "Kurs EUR: " + data[0].rates[7].mid + " PLN"
+            document.getElementById("usd").textContent = "Kurs USD: " + data[0].rates[1].mid + " PLN"
+            document.getElementById("gbp").textContent = "Kurs GBP: " + data[0].rates[10].mid + " PLN"
         })
     }
 

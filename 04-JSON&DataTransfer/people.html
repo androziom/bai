@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>People</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<input type="button" value="Load data" onclick="loadDataFromJSON()">
+<ol id="list">
+
+</ol>
+
+<script>
+    function addItemToMainList(textLine) {
+        var entry = document.createElement('li');
+        entry.appendChild(document.createTextNode(textLine));
+        list.appendChild(entry);
+    }
+
+    function loadDataFromJSON() {
+        readJSON("http://v-ie.uek.krakow.pl/~s215902/people.json", function (text) {
+            var data = JSON.parse(text);
+
+            // console.log(data)
+            data.forEach(person => {
+                addItemToMainList(person.name + ' ' + person.surname.toUpperCase() + ", " + person.country)
+            })
+            // console.log(data.length)
+        })
+    }
+
+    function readJSON(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4 && rawFile.status === 200) {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+</script>
+
+</body>
+</html>
