@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-  <script>
+
+<div id="app">
+    EMPLOYEE RECORD<br>
+    <a>Name 1: {{name1}}</a><br>
+    <a v-show="!name2 || !(0 === name2.length)">Name2: {{name2}}<br></a>
+    Surname: {{surname}}<br>
+    <a v-if="!foreigner">Pesel: {{pesel}}<br></a>
+    <a v-else>Nationality: {{nationality}}<br></a>
+    Address: {{address}}
+</div>
+
+<script>
     var app = new Vue({
-      el: '#app',
-      data: {
-        name1: 'Adam',
-        name2: 'Jan',
-        surname: 'Majewski',
-        foreigner: false,
-        nationality: 'Polish',
-        pesel: '92021708229',
-        address: 'ul. Szeroka 3, Kraków',
+        el: '#app',
+        data: {
+            name1: 'Adam',
+            name2: 'Jan',
+            surname: 'Majewski',
+            foreigner: false,
+            nationality: 'Polish',
+            pesel: '92021708229',
+            address: 'ul. Szeroka 3, Kraków',
+        }
     });
-  </script>
+</script>
 
 </body>
 </html>

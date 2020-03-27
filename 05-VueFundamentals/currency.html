@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <table border="1">
+        <tr>
+            <th>Currency</th>
+            <th>Code</th>
+            <th>Mid</th>
+        </tr>
+        <tr v-for="currency in getCurrenciesData">
+            <th>{{currency.currency}}</th>
+            <th>{{currency.code}}</th>
+            <th>{{currency.mid}}</th>
+        </tr>
+    </table>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {},
+        computed: {
+            getCurrenciesData: function () {
+                let parse = JSON.parse(readJSON("http://api.nbp.pl/api/exchangerates/tables/A?format=json"))[0].rates;
+                return parse
+            }
+        }
+    });
+
+    function readJSON(file) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, false);
+        rawFile.send(null);
+
+        if (rawFile.status === 200) {
+            // callback(rawFile.responseText);
+            return rawFile.responseText
+        }
+    }
+
+</script>
+</body>
+</html>

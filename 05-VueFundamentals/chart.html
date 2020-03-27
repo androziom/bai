@@ -1,37 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 </head>
 <body>
-  <script>
+<div id="app">
+    <!--    <canvas id="myChart" width="400" height="400"></canvas>-->
+    <canvas id="myChart"></canvas>
+</div>
+<script>
     var app = new Vue({
-      el: '#app',
-      data: {
-        films: [
-          {
-            language: 'Python',
-            popularity: 25.95
-          },
-          {
-            language: 'Java',
-            popularity: 21.42
-          },
-          {
-            language: 'JavaScript',
-            popularity: 8.26
-          },
-          {
-            language: 'C#',
-            popularity: 7.62
-          },
-          {
-            language: 'Php',
-            popularity: 7.37
-          }
-        ] 
-      }
+        el: '#app',
+        data: {
+            films: [
+                {
+                    language: 'Python',
+                    popularity: 25.95
+                },
+                {
+                    language: 'Java',
+                    popularity: 21.42
+                },
+                {
+                    language: 'JavaScript',
+                    popularity: 8.26
+                },
+                {
+                    language: 'C#',
+                    popularity: 7.62
+                },
+                {
+                    language: 'Php',
+                    popularity: 7.37
+                }
+            ]
+        }, computed: {
+            chartLabels: function () {
+                result = []
+                this.films.forEach(film => {
+                    result.push(film.language)
+                })
+
+                return result;
+            },
+            chartDataValues: function () {
+                result = []
+                this.films.forEach(film => {
+                    result.push(film.popularity)
+                })
+
+                return result;
+            },
+        }
     });
-  </script>
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: app.chartLabels,
+            backgroundColor: '#f87979',
+            datasets: [{
+                label: 'Popularność języków programowania',
+                data: app.chartDataValues,
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
 </body>
 </html>
